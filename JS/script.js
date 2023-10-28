@@ -13,4 +13,29 @@ var imageRepository = new function() {
     this.enemigo = new Image();
     this.balaEnemigo = new Image();
     this.bala = new Image();
+
+    //me aseguro que las imagenes carguen bien
+    var numImages = 5;
+    var numLoaded = 0;
+    function imageLoaded() {
+		numLoaded++;
+		if (numLoaded === numImages) {
+			window.init();
+		}
+	}
+	this.fondo.onload = function() {
+		imageLoaded();
+	}
+	this.nave.onload = function() {
+		imageLoaded();
+	}
+	this.bala.onload = function() {
+		imageLoaded();
+	}
+	this.enemigo.onload = function() {
+		imageLoaded();
+	}
+	this.balaEnemigo.onload = function() {
+		imageLoaded();
+	}
 }
