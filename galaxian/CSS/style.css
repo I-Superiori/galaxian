@@ -1,0 +1,18 @@
+canvas {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: transparent;
+}
+
+#fondo {
+    z-index: -2;
+}
+
+#principal {
+    z-index: -1;
+}
+
+#nave {
+    z-index: 0;
+}
