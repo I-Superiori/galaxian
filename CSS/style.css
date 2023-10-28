@@ -5,14 +5,14 @@ canvas {
     background: transparent;
 }
 
-#background {
+#fondo {
     z-index: -2;
 }
 
-#main {
+#principal {
     z-index: -1;
 }
 
-#ship {
+#nave {
     z-index: 0;
 }
