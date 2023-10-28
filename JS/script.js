@@ -38,4 +38,11 @@ var imageRepository = new function() {
 	this.balaEnemigo.onload = function() {
 		imageLoaded();
 	}
+
+    //conecto las imgs
+    this.fondo.src = "img/fondo.png";
+    this.nave.src = "img/nave.png";
+    this.enemigo.src = "img/enemigo.png";
+    this.balaEnemigo.src =  "img/balaEnemigo.png";
+    this.bala.src = "img/bala.png";
 }
