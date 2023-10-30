@@ -46,3 +46,16 @@ var imageRepository = new function() {
     this.balaEnemigo.src =  "img/balaEnemigo.png";
     this.bala.src = "img/bala.png";
 }
+
+//la funcion que maneja el fondo y  es un child del drawable
+function fondo(){
+    this.speed = 1;
+    this.draw = function (){
+        this.y += this.speed;
+        this.context.drawImage(imageRepository.fondo, this.x, this.y);
+        this.context.drawImage(imageRepository.fondo, this.x, this.y - this.canvasHeight);
+        if (this.y >= this.canvasHeight)
+			this.y = 0;
+    }
+}
+fondo.prototype = new drawable();
