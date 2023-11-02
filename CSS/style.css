@@ -16,3 +16,22 @@ canvas {
 #nave {
     z-index: 0;
 }
+
+.score{
+    position: absolute;
+    height:  5px;
+    width: 480px;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    cursor:  default;
+}
+.game-over{
+    position: absolute;
+    height: 100px;
+    width: 210px;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+    cursor: default;
+    display: none;
+}
+
