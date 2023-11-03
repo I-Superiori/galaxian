@@ -47,6 +47,31 @@ var imageRepository = new function() {
     this.bala.src = "img/bala.png";
 }
 
+
+function Drawable() {	
+	this.init = function(x, y) {
+		this.x = x;
+		this.y = y;
+        this.width = width;
+        this.height = height;
+	}
+
+    this.speed = 0;
+	this.canvasWidth = 0;
+	this.canvasHeight = 0;
+	this.collidableWith = "";
+	this.isColliding = false;
+	this.type = "";
+
+    this.draw = function() {
+	};
+	this.move = function() {
+	};
+	this.isCollidableWith = function(object) {
+		return (this.collidableWith === object.type);
+	};
+}
+
 //la funcion que maneja el fondo y  es un child del drawable
 function fondo(){
     this.speed = 1;
@@ -59,3 +84,10 @@ function fondo(){
     }
 }
 fondo.prototype = new drawable();
+
+//crea la bala que dispara la nave
+
+function bullet(){
+	this.alive = false; //si esta en uso es true
+	var self=object;
+}
