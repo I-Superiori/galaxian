@@ -90,4 +90,12 @@ fondo.prototype = new drawable();
 function bullet(){
 	this.alive = false; //si esta en uso es true
 	var self=object;
+
+	//los valores de la bala
+	 this.sapwn = function(x,y,speed){
+		this.x = x;
+		this.y = y;
+		this.speed = speed;
+		this.alive = true;
+	 }
 }
