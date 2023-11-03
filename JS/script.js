@@ -87,7 +87,7 @@ fondo.prototype = new drawable();
 
 //crea la bala que dispara la nave
 
-function bullet(){
+function bala(){
 	this.alive = false; //si esta en uso es true
 	var self=object;
 
@@ -103,5 +103,34 @@ function bullet(){
 	 this.draw = function(){
 		this.context.clearRect( this.x-1,this.y-1,this.width+2,this.height+2);
 		this.y -=  this.speed;
-	 }
+
+		if (this.isColliding){
+			return true;
+		}
+		else if (self === "bala"  && this.y <= 0 - this.height){
+			return true;
+		}
+		else if(self === "balaEnemigo" && this.y  >= this.canvasHeight){
+			return true;
+		}
+		else {
+			if (self === "bala"){
+				this.context.drawImage(imageRepository.bala, thjis.x, this.y);
+			}
+			else if (self === "balaEnemigo"){
+				this.context.drawImage(imageRepository.balaEnemigo, thjis.x, this.y);
+			}
+		}
+	 };
+
+	 //resetea los valores de la bala
+
+	 this.clear = function(){
+		this.x = 0;
+		this.y = 0;
+		this.speed = 0;
+		this.alive = false;
+		this.isColliding = false;
+	 };
 }
+bala.prototype = new drawable ();
