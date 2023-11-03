@@ -98,4 +98,10 @@ function bullet(){
 		this.speed = speed;
 		this.alive = true;
 	 }
+
+	// borra la bala y la mueve, y si devuelve true la borra de la pool 
+	 this.draw = function(){
+		this.context.clearRect( this.x-1,this.y-1,this.width+2,this.height+2);
+		this.y -=  this.speed;
+	 }
 }
