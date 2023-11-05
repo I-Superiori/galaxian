@@ -156,3 +156,17 @@ function QuadTree(boundBox, lvl) {
     this.nodes = [];
     var level = lvl || 0;
     var maxLevels = 5;
+	/*
+     * Limpia el QuadTree y toos los nodos de objetos
+     */
+    this.clear = function() {
+        objects = [];
+
+        for (var i = 0; i < this.nodes.length; i++) {
+            this.nodes[i].clear();
+        }
+
+        this.nodes = [];
+    };
+
+}
