@@ -396,5 +396,21 @@ this.getTwo = function(x1, y1, speed1, x2, y2, speed2) {
 		this.get(x2, y2, speed2);
         }
     };
-
+/*
+     * Dibuja las balas que se usa. Si una bala sale de la pantalla,
+     * la borra y la manda al principio del array.
+     */
+this.animate = function() {
+	for (var i = 0; i < size; i++) {
+		// Solo dibuja hasta que encuentre una bala que no esta
+		if (pool[i].alive) {
+			if (pool[i].draw()) {
+				pool[i].clear();
+				pool.push((pool.splice(i,1))[0]);
+			}
+		}
+		else
+			break;
+        }
+    };
 }
