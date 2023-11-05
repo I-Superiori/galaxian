@@ -202,6 +202,23 @@ this.findObjects = function(returnedObjects, obj) {
 
 	return returnedObjects;
     };
+/*
+     * Inserta el objeto en el QuadTree. Si el árbol
+     * excede la capacidad, se dividirá y agregará todos
+     * los objetos a sus nodos correspondientes.
+     */
+this.insert = function(obj) {
+	if (typeof obj === "undefined") {
+		return;
+	}
+
+	if (obj instanceof Array) {
+		for (var i = 0, len = obj.length; i < len; i++) {
+			this.insert(obj[i]);
+		}
+
+		return;
+	}
 
 
 }
