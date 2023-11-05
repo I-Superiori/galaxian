@@ -356,5 +356,24 @@ this.init = function(object) {
 			pool[i] = bala;
         }
         }
+else if (object == "enemigo") {
+	for (var i = 0; i < size; i++) {
+		var enemigo = new Enemigo();
+		enemigo.init(0,0, imageRepository.enemigo.width,
+						 imageRepository.enemigo.height);
+		pool[i] = enemigo;
+	}
+}
+else if (object == "balaEnemigo") {
+	for (var i = 0; i < size; i++) {
+		var bala = new bala("balaEnemigo");
+		bala.init(0,0, imageRepository.balaEnemigo.width,
+							imageRepository.balaEnemigo.height);
+		bala.collidableWith = "nave";
+		bala.type = "balaEnemigo";
+		pool[i] = bala;
+	}
+        }
+    };
 
 }
