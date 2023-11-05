@@ -321,3 +321,15 @@ this.split = function() {
 	}, level+1);
     };
 }
+/**
+ * pool. .
+ * El pool funciona asa:
+ * - Cuando se inicializa el pool, se llena un array con objetos de bala.
+ * - Cuando el pool necesita crear un nuevo objeto para su uso, examina el último elemento en el array y verifica si está actualmente en uso o no. Si está en uso, el pool está lleno. Si no está en uso, el pool "genera" el último elemento del array luego lo retira del final y lo manda de nuevo al frente del array. Esto hace que el pool tenga objetos libres en la parte trasera y objetos utilizados en la parte delantera.
+ * - Cuando el pool anima sus objetos, verifica si el objeto está en uso y si lo está, lo dibuja. Si la función draw() devuelve true, el objeto lo matamos, por lo que "mata" el objeto y utiliza la función del array splice para eliminar el elemento del array y mandarlo o empujarlo hacia atrás.
+ * Haciendo esto, se mantiene constante la creación/destrucción de objetos en el pool.
+ */
+function Pool(maxSize) {
+    var size = maxSize; // Máximo de balas permitidas en el pool
+    var pool = []; 
+}
