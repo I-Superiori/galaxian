@@ -375,5 +375,15 @@ else if (object == "balaEnemigo") {
 	}
         }
     };
+/*
+     * Obtiene el último elemento de la lista y lo inicia y
+     * lo manda al principio del array.
+     */
+this.get = function(x, y, speed) {
+	if(!pool[size - 1].alive) {
+		pool[size - 1].spawn(x, y, speed);
+		pool.unshift(pool.pop());
+        }
+    };
 
 }
