@@ -250,4 +250,15 @@ if (objects.length > maxObjects && level < maxLevels) {
 	}
         }
     };
+/*
+     * Determina a qué nodo pertenece el objeto. -1 significa
+     * que el objeto no puede encajar completamente en un nodo y forma parte
+     * del nodo actual.
+     */
+this.getIndex = function(obj) {
+
+	var index = -1;
+	var verticalMidpoint = this.bounds.x + this.bounds.width / 2;
+	var horizontalMidpoint = this.bounds.y + this.bounds.height / 2;
+	
 }
