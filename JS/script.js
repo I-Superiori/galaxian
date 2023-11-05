@@ -219,6 +219,17 @@ this.insert = function(obj) {
 
 		return;
 	}
+	if (this.nodes.length) {
+		var index = this.getIndex(obj);
+		// Solo agrega el objeto a un subnodo si cabe completamente
+		// dentro de uno
+		if (index != -1) {
+			this.nodes[index].insert(obj);
 
+			return;
+		}
+	}
+
+	objects.push(obj);
 
 }
