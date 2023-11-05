@@ -332,4 +332,29 @@ this.split = function() {
 function Pool(maxSize) {
     var size = maxSize; // Máximo de balas permitidas en el pool
     var pool = []; 
+  this.getPool = function() {
+	var obj = [];
+	for (var i = 0; i < size; i++) {
+		if (pool[i].alive) {
+			obj.push(pool[i]);
+		}
+	}
+	return obj;
+    }
+/*
+     * Lleno el array del pool con el objeto dado
+     */
+this.init = function(object) {
+	if (object == "bala") {
+		for (var i = 0; i < size; i++) {
+			// Inicializa el objeto
+			var bala = new bala("bala");
+			bala.init(0,0, imageRepository.bala.width,
+								imageRepository.bala.height);
+			bala.collidableWith = "enemigo";
+			bala.type = "bala";
+			pool[i] = bala;
+        }
+        }
+
 }
