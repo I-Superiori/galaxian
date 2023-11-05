@@ -168,5 +168,20 @@ function QuadTree(boundBox, lvl) {
 
         this.nodes = [];
     };
+/*
+     * Obtiene todos los objetos en el QuadTree
+     */
+this.getAllObjects = function(returnedObjects) {
+	for (var i = 0; i < this.nodes.length; i++) {
+		this.nodes[i].getAllObjects(returnedObjects);
+	}
+
+	for (var i = 0, len = objects.length; i < len; i++) {
+		returnedObjects.push(objects[i]);
+	}
+
+	return returnedObjects;
+    };
+
 
 }
