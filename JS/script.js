@@ -385,5 +385,16 @@ this.get = function(x, y, speed) {
 		pool.unshift(pool.pop());
         }
     };
+/*
+     * se usa para que la nave pueda tener dos balas a la vez. Si
+     * se usa la función get() dos veces, la nave puede
+     * disparar y solo tiene 1 bala en lugar de 2.
+     */
+this.getTwo = function(x1, y1, speed1, x2, y2, speed2) {
+	if(!pool[size - 1].alive && !pool[size - 2].alive) {
+		this.get(x1, y1, speed1);
+		this.get(x2, y2, speed2);
+        }
+    };
 
 }
