@@ -260,5 +260,31 @@ this.getIndex = function(obj) {
 	var index = -1;
 	var verticalMidpoint = this.bounds.x + this.bounds.width / 2;
 	var horizontalMidpoint = this.bounds.y + this.bounds.height / 2;
-	
+	// El objeto puede encajar completamente en el cuadrante superior
+	var topQuadrant = (obj.y < horizontalMidpoint && obj.y + obj.height < horizontalMidpoint);
+	// El objeto puede encajar completamente en el cuadrante inferior
+	var bottomQuadrant = (obj.y > horizontalMidpoint);
+
+	// El objeto puede encajar completamente en los cuadrantes izquierdos
+	if (obj.x < verticalMidpoint &&
+			obj.x + obj.width < verticalMidpoint) {
+		if (topQuadrant) {
+			index = 1;
+		}
+		else if (bottomQuadrant) {
+			index = 2;
+		}
+	}
+	// El objeto puede encajar completamente en los cuadrantes derechos
+	else if (obj.x > verticalMidpoint) {
+		if (topQuadrant) {
+			index = 0;
+		}
+		else if (bottomQuadrant) {
+			index = 3;
+		}
+	}
+
+	return index;
+    };
 }
