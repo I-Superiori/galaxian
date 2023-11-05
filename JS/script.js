@@ -134,3 +134,25 @@ function bala(){
 	 };
 }
 bala.prototype = new drawable ();
+/*
+ * Objeto QuadTree.
+ *
+ * Los índices de los cuadrantes se numeran de la siguiente manera:
+ *     |
+ *  1  |  0
+ * ----+----
+ *  2  |  3
+ *     |
+ */
+function QuadTree(boundBox, lvl) {
+    var maxObjects = 10;
+    this.bounds = boundBox || {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0
+    };
+    var objects = [];
+    this.nodes = [];
+    var level = lvl || 0;
+    var maxLevels = 5;
