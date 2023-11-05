@@ -287,4 +287,37 @@ this.getIndex = function(obj) {
 
 	return index;
     };
+/*
+     * Divide el nodo en 4 subnodos
+     */
+this.split = function() {
+	// Desplazamiento de bits
+	var subWidth = (this.bounds.width / 2) | 0;
+	var subHeight = (this.bounds.height / 2) | 0;
+
+	this.nodes[0] = new QuadTree({
+		x: this.bounds.x + subWidth,
+		y: this.bounds.y,
+		width: subWidth,
+		height: subHeight
+	}, level+1);
+	this.nodes[1] = new QuadTree({
+		x: this.bounds.x,
+		y: this.bounds.y,
+		width: subWidth,
+		height: subHeight
+	}, level+1);
+	this.nodes[2] = new QuadTree({
+		x: this.bounds.x,
+		y: this.bounds.y + subHeight,
+		width: subWidth,
+		height: subHeight
+	}, level+1);
+	this.nodes[3] = new QuadTree({
+		x: this.bounds.x + subWidth,
+		y: this.bounds.y + subHeight,
+		width: subWidth,
+		height: subHeight
+	}, level+1);
+    };
 }
