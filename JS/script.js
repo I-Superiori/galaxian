@@ -182,6 +182,26 @@ this.getAllObjects = function(returnedObjects) {
 
 	return returnedObjects;
     };
+/*
+     * Devuelve todos los objetos con los que el objeto podría colisionar
+     */
+this.findObjects = function(returnedObjects, obj) {
+	if (typeof obj === "undefined") {
+		console.log("OBJETO NO DEFINIDO");
+		return;
+	}
+
+	var index = this.getIndex(obj);
+	if (index != -1 && this.nodes.length) {
+		this.nodes[index].findObjects(returnedObjects, obj);
+	}
+
+	for (var i = 0, len = objects.length; i < len; i++) {
+		returnedObjects.push(objects[i]);
+	}
+
+	return returnedObjects;
+    };
 
 
 }
