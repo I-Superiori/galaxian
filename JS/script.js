@@ -433,4 +433,14 @@ function nave(){
 		this.isColliding = false;
 		this.balaPool.init("bala");
 	}
+
+	this.draw =  function (){
+		this.context.drawImage(imageRepository.nave,this.x,this.y);
+	};
+	this.move = function(){
+		counter++;
+		if (KEY_STATUS.left || KEY_STATUS.right || KEY_STATUS.down || KEY_STATUS.up){
+			
+		}
+	}
 }
