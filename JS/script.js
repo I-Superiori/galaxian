@@ -424,6 +424,13 @@ function nave(){
 	this.type = "nave";
 
 	this.init = function(x,y,width,height){
-		
+		//valores predeterminados
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.alive = true;
+		this.isColliding = false;
+		this.balaPool.init("bala");
 	}
 }
