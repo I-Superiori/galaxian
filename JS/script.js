@@ -425,7 +425,7 @@ function nave(){
 
 	this.init = function(x,y,width,height){
 		//valores predeterminados
-		this.x = x;
+		this.x = x; 
 		this.y = y;
 		this.width = width;
 		this.height = height;
@@ -439,8 +439,24 @@ function nave(){
 	};
 	this.move = function(){
 		counter++;
+		//dtermina si la accion es de movimiento
 		if (KEY_STATUS.left || KEY_STATUS.right || KEY_STATUS.down || KEY_STATUS.up){
-			
+			//en este  caso la nave se movio por lo tanto se borra para redibujarla donde corresponda
+			this.context.clearRect(this.x,this.y,this.width, this.height);
+			//actualizar valores x y y redibujar la nave segun donde se movio
+			if (KEY_STATUS.left){
+				this.x -= this.speed
+				if (this.x <= 0)
+					this.x = 0;
+			} else if (KEY_STATUS.right){
+				this.x += this.speed
+				if (this.x >= this.canvasWidth - this.width)
+				 	this.x = this.canvasWidth - this.width
+			} else if (KEY_STATUS.up){
+				this.y -= this.speed
+				if(this.y <= this.canvasHeight/4*3)
+				this.y = this.canvasHeight/4*3
+			} else if (KEY_STATUS.down)
 		}
 	}
 }
