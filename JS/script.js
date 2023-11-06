@@ -456,7 +456,33 @@ function nave(){
 				this.y -= this.speed
 				if(this.y <= this.canvasHeight/4*3)
 				this.y = this.canvasHeight/4*3
-			} else if (KEY_STATUS.down)
+			} else if (KEY_STATUS.down){
+				this.y += this.speed
+				if (this.y >= this.canvasHeight -  this.height)
+				this.y = this.canvasHeight -  this.height
+			}
 		}
-	}
+
+		//redibujar la nave
+		if (!this.isColliding){
+			 this.draw();
+		}
+
+		else {
+			this.alive = false;
+			game.gameOver();
+		}
+
+		if (KEY_STATUS.sapce && counter >=  fireRate && !this.isColliding){
+			this.fire ();
+			counter = 0;
+		}
+	};
+
+	 //dispara dos balas
+	 this.fire = function(){
+		this.balaPool.getTwo (this.x+6, this.y, 3, this.x+33, this.y, 3);
+		game.laser.get();
+	 };
 }
+nave.prototype = new  drawable();
