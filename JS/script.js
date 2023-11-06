@@ -115,10 +115,10 @@ function bala(){
 		}
 		else {
 			if (self === "bala"){
-				this.context.drawImage(imageRepository.bala, thjis.x, this.y);
+				this.context.drawImage(imageRepository.bala, this.x, this.y);
 			}
 			else if (self === "balaEnemigo"){
-				this.context.drawImage(imageRepository.balaEnemigo, thjis.x, this.y);
+				this.context.drawImage(imageRepository.balaEnemigo, this.x, this.y);
 			}
 		}
 	 };
@@ -323,7 +323,7 @@ this.split = function() {
 }
 /**
  * pool. .
- * El pool funciona asa:
+ * El pool funciona asi:
  * - Cuando se inicializa el pool, se llena un array con objetos de bala.
  * - Cuando el pool necesita crear un nuevo objeto para su uso, examina el último elemento en el array y verifica si está actualmente en uso o no. Si está en uso, el pool está lleno. Si no está en uso, el pool "genera" el último elemento del array luego lo retira del final y lo manda de nuevo al frente del array. Esto hace que el pool tenga objetos libres en la parte trasera y objetos utilizados en la parte delantera.
  * - Cuando el pool anima sus objetos, verifica si el objeto está en uso y si lo está, lo dibuja. Si la función draw() devuelve true, el objeto lo matamos, por lo que "mata" el objeto y utiliza la función del array splice para eliminar el elemento del array y mandarlo o empujarlo hacia atrás.
@@ -413,4 +413,17 @@ this.animate = function() {
 			break;
         }
     };
+}
+
+function nave(){
+	this.speed = 3;
+	this.balaPool = new pool(30);
+	var fireRate = 15;
+	var counter = 0;
+	this.collidableWith = "balaEnemigo";
+	this.type = "nave";
+
+	this.init = function(x,y,width,height){
+		
+	}
 }
