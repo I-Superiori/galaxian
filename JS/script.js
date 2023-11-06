@@ -507,5 +507,38 @@ function enemigo (){
 		this.bottomEdge = this.y + 140;
 	};
 
-	
+	//mueve al enemigo
+	this.draw = function(){
+		this.context.clearRect(this.x-1, this.y, this.width+1)
+		this.x += this.speedX;
+		this.y += this.speedY;
+
+		if (this.x <= this.leftEdge){
+			this.speedX = this.speed;
+		}
+		else if (this.x >= this.rightEdge + this.width){
+			this.speedX = this.speed
+		}
+		else if (this.y >= this.bottomEdge){
+			this.speed = 1.5;
+			this.speedY = 0;
+			this.y -= 5;
+			this.speedX = this.speed;
+		}
+
+		if (!this.isColliding){
+			this.context.drawImage(imageRepository.enemigo, this.x, this.y);
+
+			chance = Math.floor(Math.random()*101)
+			if (chance/100 <  percentFire){
+				this.fire();
+			}
+			return false
+		}
+		else {
+			game.playerScore += 10;
+			game.explosion.get();
+			return true
+		}
+	}
 }
