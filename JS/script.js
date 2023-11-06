@@ -486,3 +486,26 @@ function nave(){
 	 };
 }
 nave.prototype = new  drawable();
+
+//crea el objeto nave enemiga
+function enemigo (){
+	var percentFire  =  .01;
+	var chance = 0;
+	this.alive = false;
+	this.collidableWith = "bala";
+	this.type = "enemigo";
+
+	this.spawn = function(x, y, speed){
+		this.x = x;
+		this.y = y;
+		this.speed = speed;
+		this.speedX = 0;
+		this.speedY = speed;
+		this.alive = true;
+		this.leftEdge = this.x - 90;
+		this.rightEdge = this.x + 90;
+		this.bottomEdge = this.y + 140;
+	};
+
+	
+}
