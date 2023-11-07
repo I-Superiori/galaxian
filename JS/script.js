@@ -83,7 +83,7 @@ function fondo(){
 			this.y = 0;
     }
 }
-fondo.prototype = new drawable();
+fondo.prototype = new Drawable();
 
 //crea la bala que dispara la nave
 
@@ -133,7 +133,7 @@ function bala(){
 		this.isColliding = false;
 	 };
 }
-bala.prototype = new drawable ();
+bala.prototype = new Drawable ();
 /*
  * Objeto QuadTree.
  *
@@ -485,7 +485,7 @@ function nave(){
 		game.laser.get();
 	 };
 }
-nave.prototype = new  drawable();
+nave.prototype = new  Drawable();
 
 //crea el objeto nave enemiga
 function enemigo (){
@@ -538,7 +538,24 @@ function enemigo (){
 		else {
 			game.playerScore += 10;
 			game.explosion.get();
-			return true
+			return true;
 		}
-	}
+	};
+
+	//dispara
+	this.fire = function(){
+		game.balaEnemigoPool.get(this.x+this.width/2, this.y+this.height, -2.5)
+	};
+
+	//resetea los valores del enemigo
+	this.clear = function(){
+		this.x = 0;
+		this.y = 0;
+		this.speed = 0;
+		this.speedX = 0;
+		this.speedY = 0;
+		this.alive = false;
+		this.isColliding = false;
+	};
 }
+enemigo.prototype = new Drawable();
