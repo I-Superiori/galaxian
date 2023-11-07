@@ -61,7 +61,7 @@ function Drawable() {
 	this.collidableWith = "";
 	this.isColliding = false;
 	this.type = "";
-
+	// Define una función abstracta para implementar en objetos secundarios
     this.draw = function() {
 	};
 	this.move = function() {
@@ -474,7 +474,7 @@ function Nave(){
 			game.gameOver();
 		}
 
-		if (KEY_STATUS.sapce && counter >=  fireRate && !this.isColliding){
+		if (KEY_STATUS.space && counter >=  fireRate && !this.isColliding){
 			this.fire ();
 			counter = 0;
 		}
