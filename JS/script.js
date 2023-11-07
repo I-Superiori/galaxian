@@ -1,9 +1,8 @@
 /* inicializar el juego */
-var game = new game();
+var game = new Game();
 
 function init() {
-    if (game.init())
-        game.start();
+	game.init();
 }
 
 /* se crean objetos que van a contener las imagenes para que se generen una sola vez */
@@ -40,16 +39,16 @@ var imageRepository = new function() {
 	}
 
     //conecto las imgs
-    this.fondo.src = "img/fondo.png";
-    this.nave.src = "img/nave.png";
-    this.enemigo.src = "img/enemigo.png";
-    this.balaEnemigo.src =  "img/balaEnemigo.png";
-    this.bala.src = "img/bala.png";
+    this.fondo.src = "JS/img/fondo.png";
+    this.nave.src = "JS/img/nave.png";
+    this.enemigo.src = "JS/img/enemigo.png";
+    this.balaEnemigo.src = "JS/img/balaEnemigo.png";
+    this.bala.src = "JS/img/bala.png";
 }
 
 
 function Drawable() {	
-	this.init = function(x, y) {
+	this.init = function(x, y, width, height) {
 		this.x = x;
 		this.y = y;
         this.width = width;
@@ -72,8 +71,8 @@ function Drawable() {
 	};
 }
 
-//la funcion que maneja el fondo y  es un child del drawable
-function fondo(){
+//la funcion que maneja el fondo y  es un child del Drawable
+function Fondo(){
     this.speed = 1;
     this.draw = function (){
         this.y += this.speed;
@@ -83,16 +82,16 @@ function fondo(){
 			this.y = 0;
     }
 }
-fondo.prototype = new drawable();
+Fondo.prototype = new Drawable();
 
 //crea la bala que dispara la nave
 
-function bala(){
+function Bala(object){
 	this.alive = false; //si esta en uso es true
-	var self=object;
+	var self = object;
 
 	//los valores de la bala
-	 this.sapwn = function(x,y,speed){
+	 this.spawn = function(x, y, speed){
 		this.x = x;
 		this.y = y;
 		this.speed = speed;
@@ -120,7 +119,9 @@ function bala(){
 			else if (self === "balaEnemigo"){
 				this.context.drawImage(imageRepository.balaEnemigo, this.x, this.y);
 			}
+			return false;
 		}
+		
 	 };
 
 	 //resetea los valores de la bala
@@ -133,7 +134,7 @@ function bala(){
 		this.isColliding = false;
 	 };
 }
-bala.prototype = new drawable ();
+Bala.prototype = new Drawable ();
 /*
  * Objeto QuadTree.
  *
@@ -348,7 +349,7 @@ this.init = function(object) {
 	if (object == "bala") {
 		for (var i = 0; i < size; i++) {
 			// Inicializa el objeto
-			var bala = new bala("bala");
+			var bala = new Bala("bala");
 			bala.init(0,0, imageRepository.bala.width,
 								imageRepository.bala.height);
 			bala.collidableWith = "enemigo";
@@ -366,7 +367,7 @@ else if (object == "enemigo") {
 }
 else if (object == "balaEnemigo") {
 	for (var i = 0; i < size; i++) {
-		var bala = new bala("balaEnemigo");
+		var bala = new Bala("balaEnemigo");
 		bala.init(0,0, imageRepository.balaEnemigo.width,
 							imageRepository.balaEnemigo.height);
 		bala.collidableWith = "nave";
@@ -415,9 +416,9 @@ this.animate = function() {
     };
 }
 
-function nave(){
+function Nave(){
 	this.speed = 3;
-	this.balaPool = new pool(30);
+	this.balaPool = new Pool(30);
 	var fireRate = 15;
 	var counter = 0;
 	this.collidableWith = "balaEnemigo";
@@ -485,10 +486,10 @@ function nave(){
 		game.laser.get();
 	 };
 }
-nave.prototype = new  drawable();
+Nave.prototype = new  Drawable();
 
 //crea el objeto nave enemiga
-function enemigo (){
+function Enemigo (){
 	var percentFire  =  .01;
 	var chance = 0;
 	this.alive = false;
@@ -509,7 +510,7 @@ function enemigo (){
 
 	//mueve al enemigo
 	this.draw = function(){
-		this.context.clearRect(this.x-1, this.y, this.width+1)
+		this.context.clearRect(this.x-1, this.y, this.width+1, this.height)
 		this.x += this.speedX;
 		this.y += this.speedY;
 
@@ -517,13 +518,13 @@ function enemigo (){
 			this.speedX = this.speed;
 		}
 		else if (this.x >= this.rightEdge + this.width){
-			this.speedX = this.speed
+			this.speedX = -this.speed
 		}
 		else if (this.y >= this.bottomEdge){
 			this.speed = 1.5;
 			this.speedY = 0;
 			this.y -= 5;
-			this.speedX = this.speed;
+			this.speedX = -this.speed;
 		}
 
 		if (!this.isColliding){
@@ -540,5 +541,327 @@ function enemigo (){
 			game.explosion.get();
 			return true
 		}
+	};
+	
+	/*
+	 * dispara una bala
+	 */
+	this.fire = function() {
+		game.balaEnemigoPool.get(this.x+this.width/2, this.y+this.height, -2.5);
+	};
+
+	/*
+	 * reinicia los valores del enemigo
+	 */
+	this.clear = function() {
+		this.x = 0;
+		this.y = 0;
+		this.speed = 0;
+		this.speedX = 0;
+		this.speedY = 0;
+		this.alive = false;
+		this.isColliding = false;
+	};
+}
+Enemigo.prototype = new Drawable();
+
+
+/**
+ * crea el objeto juego 
+ */
+function Game() {
+	/*
+	 * obtiene la informacion y context del canvas
+	 * devuelve true si el browser soporta canvas y false si no
+	 */
+	this.init = function() {
+		// obtiene elementos del canvas
+		this.bgCanvas = document.getElementById('fondo');
+		this.naveCanvas = document.getElementById('nave');
+		this.principalCanvas = document.getElementById('principal');
+
+		// testea si el canvas funciona
+		if (this.bgCanvas.getContext) {
+			this.bgContext = this.bgCanvas.getContext('2d');
+			this.naveContext = this.naveCanvas.getContext('2d');
+			this.principalContext = this.principalCanvas.getContext('2d');
+
+			// inicializa objetos que contienen context e informacion del canvas
+			Fondo.prototype.context = this.bgContext;
+			Fondo.prototype.canvasWidth = this.bgCanvas.width;
+			Fondo.prototype.canvasHeight = this.bgCanvas.height;
+
+			Nave.prototype.context = this.naveContext;
+			Nave.prototype.canvasWidth = this.naveCanvas.width;
+			Nave.prototype.canvasHeight = this.naveCanvas.height;
+
+			Bala.prototype.context = this.principalContext;
+			Bala.prototype.canvasWidth = this.principalCanvas.width;
+			Bala.prototype.canvasHeight = this.principalCanvas.height;
+
+			Enemigo.prototype.context = this.principalContext;
+			Enemigo.prototype.canvasWidth = this.principalCanvas.width;
+			Enemigo.prototype.canvasHeight = this.principalCanvas.height;
+
+			// inicializa el objeto fondo
+			this.fondo = new Fondo();
+			this.fondo.init(0,0); 
+
+			// inicilaiza objeto nave
+			this.nave = new Nave();
+			// define donde aparece la nave
+			this.naveStartX = this.naveCanvas.width/2 - imageRepository.nave.width;
+			this.naveStartY = this.naveCanvas.height/4*3 + imageRepository.nave.height*2;
+			this.nave.init(this.naveStartX, this.naveStartY,
+			               imageRepository.nave.width, imageRepository.nave.height);
+
+			// inicia la pool del enemigo
+			this.enemigoPool = new Pool(30);
+			this.enemigoPool.init("enemigo");
+			this.spawnWave();
+
+			this.balaEnemigoPool = new Pool(50);
+			this.balaEnemigoPool.init("balaEnemigo");
+
+			// inicia QuadTree
+			this.quadTree = new QuadTree({x:0,y:0,width:this.principalCanvas.width,height:this.principalCanvas.height});
+
+			this.playerScore = 0;
+
+			// archivos de audio
+			this.laser = new SoundPool(10);
+			this.laser.init("laser");
+
+			this.explosion = new SoundPool(20);
+			this.explosion.init("explosion");
+
+			this.backgroundAudio = new Audio("JS/sounds/kick_shock.wav");
+			this.backgroundAudio.loop = true;
+			this.backgroundAudio.volume = .25;
+			this.backgroundAudio.load();
+
+			this.gameOverAudio = new Audio("JS/sounds/game_over.wav");
+			this.gameOverAudio.loop = true;
+			this.gameOverAudio.volume = .25;
+			this.gameOverAudio.load();
+
+			this.checkAudio = window.setInterval(function(){checkReadyState()},1000);
+		}
+	};
+
+	//spawnea una nueva ola de enemigos
+	this.spawnWave = function() {
+		var height = imageRepository.enemigo.height;
+		var width = imageRepository.enemigo.width;
+		var x = 100;
+		var y = -height;
+		var spacer = y * 1.5;
+		for (var i = 1; i <= 18; i++) {
+			this.enemigoPool.get(x,y,2);
+			x += width + 25;
+			if (i % 6 == 0) {
+				x = 100;
+				y += spacer
+			}
+		}
+	}
+
+	// inicia el loop de animacion
+	this.start = function() {
+		this.nave.draw();
+		this.backgroundAudio.play();
+		animate();
+	};
+
+	// reinicia el juego
+	this.restart = function() {
+		this.gameOverAudio.pause();
+
+		document.getElementById('game-over').style.display = "none";
+		this.bgContext.clearRect(0, 0, this.bgCanvas.width, this.bgCanvas.height);
+		this.naveContext.clearRect(0, 0, this.naveCanvas.width, this.naveCanvas.height);
+		this.principalContext.clearRect(0, 0, this.principalCanvas.width, this.principalCanvas.height);
+
+		this.quadTree.clear();
+
+		this.fondo.init(0,0);
+		this.nave.init(this.naveStartX, this.naveStartY,
+		               imageRepository.nave.width, imageRepository.nave.height);
+
+		this.enemigoPool.init("enemigo");
+		this.spawnWave();
+		this.balaEnemigoPool.init("balaEnemigo");
+
+		this.playerScore = 0;
+
+		this.backgroundAudio.currentTime = 0;
+		this.backgroundAudio.play();
+
+		this.start();
+	};
+
+	// Game over
+	this.gameOver = function() {
+		this.backgroundAudio.pause();
+		this.gameOverAudio.currentTime = 0;
+		this.gameOverAudio.play();
+		document.getElementById('game-over').style.display = "block";
+	};
+}
+
+/**
+ * se asegura que los sonidos hayan cargado
+ */
+function checkReadyState() {
+	if (game.gameOverAudio.readyState === 4 && game.backgroundAudio.readyState === 4) {
+		window.clearInterval(game.checkAudio);
+		document.getElementById('loading').style.display = "none";
+		game.start();
 	}
 }
+
+
+/**
+ * la pool de sonido
+ */
+function SoundPool(maxSize) {
+	var size = maxSize; // maximo de balas permitidas en la pool
+	var pool = [];
+	this.pool = pool;
+	var currSound = 0;
+
+	
+	this.init = function(object) {
+		if (object == "laser") {
+			for (var i = 0; i < size; i++) {
+				laser = new Audio("JS/sounds/laser.wav");
+				laser.volume = .12;
+				laser.load();
+				pool[i] = laser;
+			}
+		}
+		else if (object == "explosion") {
+			for (var i = 0; i < size; i++) {
+				var explosion = new Audio("JS/sounds/explosion.wav");
+				explosion.volume = .1;
+				explosion.load();
+				pool[i] = explosion;
+			}
+		}
+	};
+
+	/*
+	 * hace un sonido
+	 */
+	this.get = function() {
+		if(pool[currSound].currentTime == 0 || pool[currSound].ended) {
+			pool[currSound].play();
+		}
+		currSound = (currSound + 1) % size;
+	};
+}
+
+
+/**
+ * el loop de animacion
+ */
+function animate() {
+	document.getElementById('score').innerHTML = game.playerScore;
+
+	// inserta objetos en el quadtree
+	game.quadTree.clear();
+	game.quadTree.insert(game.nave);
+	game.quadTree.insert(game.nave.balaPool.getPool());
+	game.quadTree.insert(game.enemigoPool.getPool());
+	game.quadTree.insert(game.balaEnemigoPool.getPool());
+
+	detectCollision();
+
+	// no mas enemigos
+	if (game.enemigoPool.getPool().length === 0) {
+		game.spawnWave();
+	}
+
+	// anima los objetos del juego
+	if (game.nave.alive) {
+		requestAnimFrame( animate );
+
+		game.fondo.draw();
+		game.nave.move();
+		game.nave.balaPool.animate();
+		game.enemigoPool.animate();
+		game.balaEnemigoPool.animate();
+	}
+}
+
+function detectCollision() {
+	var objects = [];
+	game.quadTree.getAllObjects(objects);
+
+	for (var x = 0, len = objects.length; x < len; x++) {
+		game.quadTree.findObjects(obj = [], objects[x]);
+
+		for (y = 0, length = obj.length; y < length; y++) {
+
+			// algoritmo que detecta colision
+			if (objects[x].collidableWith === obj[y].type &&
+				(objects[x].x < obj[y].x + obj[y].width &&
+			     objects[x].x + objects[x].width > obj[y].x &&
+				 objects[x].y < obj[y].y + obj[y].height &&
+				 objects[x].y + objects[x].height > obj[y].y)) {
+				objects[x].isColliding = true;
+				obj[y].isColliding = true;
+			}
+		}
+	}
+};
+
+
+// las teclas
+KEY_CODES = {
+  32: 'space',
+  37: 'left',
+  38: 'up',
+  39: 'right',
+  40: 'down',
+}
+
+// crea el array que contiene los key_codes y pone sus valores en true
+KEY_STATUS = {};
+for (code in KEY_CODES) {
+  KEY_STATUS[KEY_CODES[code]] = false;
+}
+/**
+ * caundo haces click en una tecla esto define que tecla fue clickeada dandole el valor true
+ */
+document.onkeydown = function(e) {
+	// Firefox and opera use charCode instead of keyCode to
+	// return which key was pressed.
+	var keyCode = (e.keyCode) ? e.keyCode : e.charCode;
+  if (KEY_CODES[keyCode]) {
+		e.preventDefault();
+    KEY_STATUS[KEY_CODES[keyCode]] = true;
+  }
+}
+/**si la tecla no esta siendo clockeada le da el valor false
+ */
+document.onkeyup = function(e) {
+  var keyCode = (e.keyCode) ? e.keyCode : e.charCode;
+  if (KEY_CODES[keyCode]) {
+    e.preventDefault();
+    KEY_STATUS[KEY_CODES[keyCode]] = false;
+  }
+}
+
+
+
+window.requestAnimFrame = (function(){
+	return  window.requestAnimationFrame       ||
+			window.webkitRequestAnimationFrame ||
+			window.mozRequestAnimationFrame    ||
+			window.oRequestAnimationFrame      ||
+			window.msRequestAnimationFrame     ||
+			function(/* function / callback, / DOMElement */ element){
+				window.setTimeout(callback, 1000 / 60);
+			};
+})();

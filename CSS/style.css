@@ -21,7 +21,7 @@ canvas {
     position: absolute;
     height:  5px;
     width: 480px;
-    color: white;
+    color: rgb(212, 28, 28);
     font-family: 'Times New Roman', Times, serif;
     cursor:  default;
 }
@@ -29,7 +29,7 @@ canvas {
     position: absolute;
     height: 100px;
     width: 210px;
-    color: white;
+    color: rgb(156, 46, 46);
     font-family: 'Times New Roman', Times, serif;
     cursor: default;
     display: none;
