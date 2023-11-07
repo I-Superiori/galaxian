@@ -1,7 +1,11 @@
+body {
+    background: #000000;
+}
 canvas {
+    border: 1px solid #8f1313;
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 150px;
+    left: 350px;
     background: transparent;
 }
 
@@ -21,15 +25,15 @@ canvas {
     position: absolute;
     height:  5px;
     width: 480px;
-    color: white;
+    color: rgb(212, 28, 28);
     font-family: 'Times New Roman', Times, serif;
     cursor:  default;
 }
 .game-over{
     position: absolute;
-    height: 100px;
-    width: 210px;
-    color: white;
+    top: 100px;
+    left: 210px;
+    color: rgb(156, 46, 46);
     font-family: 'Times New Roman', Times, serif;
     cursor: default;
     display: none;
@@ -43,4 +47,13 @@ canvas {
 .game-over span:hover {
     color: #FFD700;
 }
+			.loading { 
+				position: absolute;
+				top: 100px;
+				left: 110px;
+				color: #FF7F00;
+				font-family: Helvetica, sans-serif;
+				font-size: 30px;
+				cursor: default;
+			}
 
