@@ -82,11 +82,7 @@ function Fondo(){
 			this.y = 0;
     }
 }
-<<<<<<< HEAD
-fondo.prototype = new Drawable();
-=======
 Fondo.prototype = new Drawable();
->>>>>>> 21ce543164b43cf09b0f21ad458bd820f9c0a2fc
 
 //crea la bala que dispara la nave
 
@@ -138,11 +134,7 @@ function Bala(object){
 		this.isColliding = false;
 	 };
 }
-<<<<<<< HEAD
-bala.prototype = new Drawable ();
-=======
 Bala.prototype = new Drawable ();
->>>>>>> 21ce543164b43cf09b0f21ad458bd820f9c0a2fc
 /*
  * Objeto QuadTree.
  *
@@ -483,22 +475,19 @@ function Nave(){
 		}
 
 		if (KEY_STATUS.sapce && counter >=  fireRate && !this.isColliding){
-			this.fire ();
+			this.fire();
 			counter = 0;
 		}
 	};
 
 	 //dispara dos balas
-	 this.fire = function(){
-		this.balaPool.getTwo (this.x+6, this.y, 3, this.x+33, this.y, 3);
+	 this.fire = function() {
+		this.balaPool.getTwo(this.x+6, this.y, 3,
+		                       this.x+33, this.y, 3);
 		game.laser.get();
 	 };
 }
-<<<<<<< HEAD
-nave.prototype = new  Drawable();
-=======
 Nave.prototype = new  Drawable();
->>>>>>> 21ce543164b43cf09b0f21ad458bd820f9c0a2fc
 
 //crea el objeto nave enemiga
 function Enemigo (){
@@ -551,19 +540,9 @@ function Enemigo (){
 		else {
 			game.playerScore += 10;
 			game.explosion.get();
-			return true;
+			return true
 		}
 	};
-<<<<<<< HEAD
-
-	//dispara
-	this.fire = function(){
-		game.balaEnemigoPool.get(this.x+this.width/2, this.y+this.height, -2.5)
-	};
-
-	//resetea los valores del enemigo
-	this.clear = function(){
-=======
 	
 	/*
 	 * dispara una bala
@@ -576,7 +555,6 @@ function Enemigo (){
 	 * reinicia los valores del enemigo
 	 */
 	this.clear = function() {
->>>>>>> 21ce543164b43cf09b0f21ad458bd820f9c0a2fc
 		this.x = 0;
 		this.y = 0;
 		this.speed = 0;
@@ -586,9 +564,6 @@ function Enemigo (){
 		this.isColliding = false;
 	};
 }
-<<<<<<< HEAD
-enemigo.prototype = new Drawable();
-=======
 Enemigo.prototype = new Drawable();
 
 
@@ -891,4 +866,3 @@ window.requestAnimFrame = (function(){
 				window.setTimeout(callback, 1000 / 60);
 			};
 })();
->>>>>>> 21ce543164b43cf09b0f21ad458bd820f9c0a2fc

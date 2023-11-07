@@ -22,7 +22,7 @@ canvas {
 }
 
 .score{
-    position: absolute;
+    position: fixed;
     height:  5px;
     width: 480px;
     color: rgb(212, 28, 28);
