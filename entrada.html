@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="fade"></div>
-    <section class="star-wars">
+    <section class="star-wars" id="starWarsSection">
         <div class="crawl">
           <div class="title">
             <p>Episode I</p>
@@ -28,5 +28,18 @@
           <p>¡Prepárate para enfrentarte a desafiantes enemigos, evadir ataques mortales y convertirte en el héroe que restaurará la esperanza en la galaxia en este emocionante juego de Galaxian con temática de Star Wars! </p>
         </div>
       </section>
+      <script>
+        var starWarsSection = document.getElementById('starWarsSection');
+
+        starWarsSection.addEventListener('click', function() {
+            startAnimation();
+        });
+
+        function startAnimation() {
+            var crawlElement = document.querySelector('.crawl');
+            crawlElement.classList.add('animate-crawl');
+        }
+      </script>
+      
 </body>
 </html>
