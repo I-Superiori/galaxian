@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta http-equiv="REFRESH" content="65;URL=index.html" />
+    <meta http-equiv="REFRESH" content="63;URL=index.html" />
     <link rel="stylesheet" href="CSS/Entrada.css">
     <title>entrada</title>
 </head>
 <body>
+  <audio id="starWarsAudio" src="audio\Star_Wars_original_opening_crawl_1977.mp3"></audio>
     <div class="fade"></div>
     <section class="star-wars" id="starWarsSection">
         <div class="crawl">
           <div class="title">
-            <p>Episode I</p>
+            <p>Galaxian I</p>
             <h1>GALAXIAN Star Wars</h1>
           </div>
           
@@ -30,6 +31,7 @@
       </section>
       <script>
         var starWarsSection = document.getElementById('starWarsSection');
+        var starWarsAudio = document.getElementById('starWarsAudio');
 
         starWarsSection.addEventListener('click', function() {
             startAnimation();
@@ -38,6 +40,8 @@
         function startAnimation() {
             var crawlElement = document.querySelector('.crawl');
             crawlElement.classList.add('animate-crawl');
+            starWarsAudio.currentTime = 9;
+            starWarsAudio.play();
         }
       </script>
       
