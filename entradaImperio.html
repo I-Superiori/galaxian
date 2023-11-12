@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="REFRESH" content="63;URL=index.html" />
+    <link rel="stylesheet" href="CSS/Entrada.css">
+    <title>entrada</title>
+</head>
+<body>
+  <audio id="starWarsAudio" src="audio\Star_Wars_original_opening_crawl_1977.mp3"></audio>
+    <div class="fade"></div>
+    <section class="star-wars" id="starWarsSection">
+        <div class="crawl">
+          <div class="title">
+            <p>Galaxian I</p>
+            <h1>GALAXIAN Star Wars</h1>
+          </div>
+          
+          <p>Es una época de intensa batalla espacial. Las formidables naves del Imperio, desde su base fortificada, han obtenido su primera victoria contra la resistencia rebelde que amenaza la paz en la Galaxia.</p>
+<p>Durante estas emocionantes batallas, los valientes pilotos imperiales deben enfrentarse a enjambres de naves enemigas mientras defienden el orden y la supremacía del Imperio. Tu misión como jugador es pilotar una nave espacial y adentrarte en este frenético universo leal a la causa imperial.</p>
+<p>Debes atacar la Estrella de la Muerte, una estación espacial robada por rebeldes con el poder suficiente para mantener la seguridad y la estabilidad en toda la galaxia.</p>
+<p>Perseguido por los rebeldes y otros elementos disidentes, deberás demostrar tus habilidades como piloto estelar y correr hacia la seguridad de tu base imperial, llevando contigo los valiosos secretos estratégicos que podrían asegurar la victoria del Imperio en esta guerra espacial.</p>
+<p>¡Prepárate para enfrentarte a desafiantes enemigos, evadir ataques mortales y convertirte en el héroe que mantendrá la paz y el control imperial en este emocionante juego de Galaxian con la inconfundible temática de Star Wars!</p>
+
+        </div>
+      </section>
+      <script>
+        var starWarsSection = document.getElementById('starWarsSection');
+        var starWarsAudio = document.getElementById('starWarsAudio');
+
+        starWarsSection.addEventListener('click', function() {
+            startAnimation();
+        });
+
+        function startAnimation() {
+            var crawlElement = document.querySelector('.crawl');
+            crawlElement.classList.add('animate-crawl');
+            starWarsAudio.currentTime = 9;
+            starWarsAudio.play();
+        }
+      </script>
+      
+</body>
+</html>
