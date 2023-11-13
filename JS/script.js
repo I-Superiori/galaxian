@@ -474,13 +474,8 @@ function Nave(){
 			game.gameOver();
 		}
 
-<<<<<<< HEAD
-		if (KEY_STATUS.space && counter >=  fireRate && !this.isColliding){
-			this.fire();
-=======
 		if (KEY_STATUS.space && counter >=  fireRate && !this.isColliding){
 			this.fire ();
->>>>>>> 83ac8dce94ae04d3bb1b032c433b691de9aaa7b1
 			counter = 0;
 		}
 	};
@@ -620,17 +615,19 @@ function Game() {
 			this.naveStartY = this.naveCanvas.height/4*3 + imageRepository.nave.height*2;
 			this.nave.init(this.naveStartX, this.naveStartY,
 			               imageRepository.nave.width, imageRepository.nave.height);
-
+			
 			// inicia la pool del enemigo
-			this.enemigoPool = new Pool(30);
+			this.enemigoPool = new Pool(5);
 			this.enemigoPool.init("enemigo");
 			this.spawnWave();
 
-			this.balaEnemigoPool = new Pool(50);
+			this.balaEnemigoPool = new Pool(10);
 			this.balaEnemigoPool.init("balaEnemigo");
 
 			// inicia QuadTree
 			this.quadTree = new QuadTree({x:0,y:0,width:this.principalCanvas.width,height:this.principalCanvas.height});
+
+			this.ronda = 1;
 
 			this.playerScore = 0;
 
@@ -654,6 +651,14 @@ function Game() {
 			this.checkAudio = window.setInterval(function(){checkReadyState()},1000);
 		}
 	};
+
+	function rondas(){
+		if (ronda == 1){
+			this.enemigoPool = new Pool(5);
+		}else if (ronda == 2){
+			this.enemigoPool = new Pool(10);
+		}
+	}
 
 	//spawnea una nueva ola de enemigos
 	this.spawnWave = function() {
@@ -699,6 +704,8 @@ function Game() {
 		this.balaEnemigoPool.init("balaEnemigo");
 
 		this.playerScore = 0;
+
+		if (this.playerScore < 50)
 
 		this.backgroundAudio.currentTime = 0;
 		this.backgroundAudio.play();
@@ -778,14 +785,16 @@ function animate() {
 	game.quadTree.clear();
 	game.quadTree.insert(game.nave);
 	game.quadTree.insert(game.nave.balaPool.getPool());
-	game.quadTree.insert(game.enemigoPool.getPool());
+	game.quadTree.insert(rondas.enemigoPool.getPool());
 	game.quadTree.insert(game.balaEnemigoPool.getPool());
 
 	detectCollision();
 
 	// no mas enemigos
-	if (game.enemigoPool.getPool().length === 0) {
+	if (rondas.enemigoPool.getPool().length === 0) {
 		game.spawnWave();
+		this.ronda ++; 
+		console.log(ronda);
 	}
 
 	// anima los objetos del juego
@@ -795,7 +804,7 @@ function animate() {
 		game.fondo.draw();
 		game.nave.move();
 		game.nave.balaPool.animate();
-		game.enemigoPool.animate();
+		rondas.enemigoPool.animate();
 		game.balaEnemigoPool.animate();
 	}
 }

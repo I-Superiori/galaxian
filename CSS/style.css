@@ -28,6 +28,7 @@ canvas {
     color: rgb(212, 28, 28);
     font-family: 'Times New Roman', Times, serif;
     cursor:  default;
+    justify-content: center;
 }
 .game-over{
     position: absolute;
@@ -37,6 +38,7 @@ canvas {
     font-family: 'Times New Roman', Times, serif;
     cursor: default;
     display: none;
+    justify-content: center;
 }
 .game-over span {
     font-size: 20px;
