@@ -40,8 +40,8 @@ var imageRepository = new function() {
 
     //conecto las imgs
     this.fondo.src = "JS/img/fondo.png";
-    this.nave.src = "JS/img/nave.png";
-    this.enemigo.src = "JS/img/enemigo.png";
+    this.nave.src = "JS/img/naveImperio.png";
+    this.enemigo.src = "JS/img/enemigoImperio.png";
     this.balaEnemigo.src = "JS/img/balaEnemigo.png";
     this.bala.src = "JS/img/bala.png";
 }
