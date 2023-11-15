@@ -40,8 +40,8 @@ var imageRepository = new function() {
 
     //conecto las imgs
     this.fondo.src = "JS/img/fondo.png";
-    this.nave.src = "JS/img/nave.png";
-    this.enemigo.src = "JS/img/enemigo.png";
+    this.nave.src = "JS/img/naveImperio.png";
+    this.enemigo.src = "JS/img/enemigoImperio.png";
     this.balaEnemigo.src = "JS/img/balaEnemigo.png";
     this.bala.src = "JS/img/bala.png";
 }
@@ -481,9 +481,8 @@ function Nave(){
 	};
 
 	 //dispara dos balas
-	 this.fire = function() {
-		this.balaPool.getTwo(this.x+6, this.y, 3,
-		                       this.x+33, this.y, 3);
+	 this.fire = function(){
+		this.balaPool.getTwo (this.x+6, this.y, 3, this.x+33, this.y, 3);
 		game.laser.get();
 	 };
 }
@@ -616,48 +615,13 @@ function Game() {
 			this.nave.init(this.naveStartX, this.naveStartY,
 			               imageRepository.nave.width, imageRepository.nave.height);
 
-			var ronda = 1;
-
 			// inicia la pool del enemigo
-			switch (this.ronda){
-				case 1 :
-					this.n1 =  5;
-					this.n2 = 10;
-					break;
-					
-				case 2 :
-					this.n1 =  10;
-					this.n2 = 20;
-					break;
-					
-				case 3  :
-					this.n1 =  15;
-					this.n2 = 30;
-					break;
-					
-				case 4 :
-					this.n1 =  20;
-					this.n2 = 40;
-					break;
-					
-				case 5 :
-					this.n1 = 30;
-					this.n2 = 50;
-					break;
-					
-				case 6 :
-					this.n1 = 0;
-					this.n2 = 0;
-					rondaFinal = true;
-					
-					break;
-			}
-			this.enemigoPool = new Pool(this.n1);
+			this.enemigoPool = new Pool(30);
 			this.enemigoPool.init("enemigo");
 			this.spawnWave();
-	
-			this.balaEnemigoPool = new Pool(this.n2);
-			this.balaEnemigoPool.init("balaEnemigo");  
+
+			this.balaEnemigoPool = new Pool(50);
+			this.balaEnemigoPool.init("balaEnemigo");
 
 			// inicia QuadTree
 			this.quadTree = new QuadTree({x:0,y:0,width:this.principalCanvas.width,height:this.principalCanvas.height});
@@ -691,7 +655,7 @@ function Game() {
 		var width = imageRepository.enemigo.width;
 		var x = 100;
 		var y = -height;
-		var spacer = y * 1.5;  
+		var spacer = y * 1.5;
 		for (var i = 1; i <= 18; i++) {
 			this.enemigoPool.get(x,y,2);
 			x += width + 25;
@@ -729,8 +693,6 @@ function Game() {
 		this.balaEnemigoPool.init("balaEnemigo");
 
 		this.playerScore = 0;
-
-		if (this.playerScore < 50)
 
 		this.backgroundAudio.currentTime = 0;
 		this.backgroundAudio.play();
@@ -818,8 +780,6 @@ function animate() {
 	// no mas enemigos
 	if (game.enemigoPool.getPool().length === 0) {
 		game.spawnWave();
-		this.ronda ++; 
-		console.log(ronda);
 	}
 
 	// anima los objetos del juego
